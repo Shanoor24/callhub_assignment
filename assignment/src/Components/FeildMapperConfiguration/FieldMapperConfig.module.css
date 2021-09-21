@@ -13,12 +13,17 @@
 
 .button_cont {
     display: flex;
+    /* border: 1.5px dashed #b1aeae; */
     border: 1.5px dashed #6baae6;
     width: 163px;
     margin-left: 25px;
     border-radius: 0.2em;
     cursor: pointer;
 }
+
+/* .button_cont:hover {
+    border: 1.5px dashed #6baae6;
+} */
 
 .button_cont > div:nth-child(1) {
     background-color: #EFEFEF;

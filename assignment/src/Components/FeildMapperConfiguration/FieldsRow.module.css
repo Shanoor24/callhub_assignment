@@ -8,7 +8,7 @@
     /* border: 1px solid green; */
     margin: auto;
     display: flex;
-    margin-bottom: 7px;
+    margin-bottom: 8px;
 }
 
 .field_cont {
@@ -17,6 +17,11 @@
     padding: 8px 0px 5px 10px;
     display: flex;
     border-radius: 0.2em;
+    cursor: pointer;
+}
+
+.field_cont:hover {
+    border: 1px solid #6baae6;
 }
 
 .field_cont > div:nth-child(1) {
@@ -45,4 +50,55 @@
     /* border: 1px solid black; */
     padding-top: 11px;
     box-sizing: border-box;
+}
+
+.options_cont {
+    position: absolute;
+    width: 210px;
+    /* border: 1px solid red; */
+    padding: 4px 0px 4px 0px;
+    margin-left: -11px;
+    margin-top: 35px;
+    background-color: #FFFFFF;
+    height: 200px;
+    overflow: auto;
+    border: 1px solid #b1aeae;
+    border-radius: 0.2em;
+
+}
+
+.options_cont::-webkit-scrollbar {
+    width: 7px;
+    padding: 10px 10px 10px 10px;
+}
+
+.options_cont::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+    border-radius: 1em;
+    border: 1px solid #b1aeae;
+}
+
+.options_cont::-webkit-scrollbar-thumb {
+    background: #C7C7C7;
+    border-radius: 1em;
+}
+
+.options_cont::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+}
+
+.options_cont > div {
+    border: 0px solid green;
+    text-align: left;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 14.5px;
+    font-weight: 700;
+    color: #727171; 
+    padding: 4px 0px 4px 10px;
+    cursor: pointer;
+}
+
+.options_cont > div:hover {
+    background-color: #5897FB;
+    color: #FFFFFF;
 }

@@ -5,18 +5,30 @@ import FieldsRow from './FieldsRow';
 
 
 function FieldMapperConfigMain() {
-    const [fieldCount, setFieldCount] = useState([1]);
+    const [fieldCount, setFieldCount] = useState([{id: 1, salesStatus: false, callHubCustomStatus: false}]);
+    const [selectedSalesIds, setSelectedSalesIds] = useState([]);
+    const [selectedcallHubIds, setSelectedCallHubIds] = useState([]);
 
     const handleAddRow = () => {
-        setFieldCount([...fieldCount, (fieldCount[fieldCount.length - 1] + 1)])
+        const payload = {
+            id: (fieldCount[fieldCount.length - 1].id + 1),
+            salesStatus: false,
+            callHubCustomStatus: false
+        }
+        setFieldCount([...fieldCount, payload])
     }
 
-    const handleDelete = (id) => {
-        const Updated_fieldCount = fieldCount.filter((item) => item !== id);
+    const handleToggleSalesStatus = (id) => {
+        const updatedFieldCount = fieldCount.map((item) => item.id === id ? {...item, salesStatus: !item.salesStatus} : {...item, salesStatus : false})
 
-        setFieldCount(Updated_fieldCount);
+        setFieldCount(updatedFieldCount);
     }
 
+    const handleToggleCallHubStatus = (id) => {
+        const updatedFieldCount = fieldCount.map((item) => item.id === id ? {...item, callHubCustomStatus: !item.callHubCustomStatus} : {...item, callHubCustomStatus : false})
+
+        setFieldCount(updatedFieldCount);
+    }
 
     const initSalesForceFields = [
         {id: 1, name: "Contact ID", status: true},
@@ -50,11 +62,54 @@ function FieldMapperConfigMain() {
 
     const [salesForceFields, setSalesForceFields] = useState(initSalesForceFields);
     const [callHubCustomFields, setCallHubCustomFields] = useState(initCallHubCustomFields);
+
+    const handleSalesFieldOptionToggle = (id, mainId, value) => {
+        if (selectedSalesIds.length > 0 && selectedSalesIds.includes(mainId)) {
+            const updatedSalesForceFields = salesForceFields.map((item) => item.id === id ? {...item, status: false} : item.name === value ? {...item, status: true} : item);
+
+            setSalesForceFields(updatedSalesForceFields);
+        } else {
+            const updatedSalesForceFields = salesForceFields.map((item) => item.id === id ? {...item, status: false} : item);
+
+            setSalesForceFields(updatedSalesForceFields);
+            setSelectedSalesIds([...selectedSalesIds, mainId])
+        }
+        
+    }
+
+    const handleCallHubFieldOptionToggle = (id, mainId, value) => {
+        if (selectedcallHubIds.length > 0 && selectedcallHubIds.includes(mainId)) {
+            const updatedCallHubCustomFields = callHubCustomFields.map((item) => item.id === id ? {...item, status: false} : item.name === value ? {...item, status: true} : item);
+
+            setCallHubCustomFields(updatedCallHubCustomFields);
+        } else {
+            const updatedCallHubCustomFields = callHubCustomFields.map((item) => item.id === id ? {...item, status: false} : item);
+
+            setCallHubCustomFields(updatedCallHubCustomFields);
+            setSelectedCallHubIds([...selectedcallHubIds, mainId])
+        }
+        
+    } 
+
+
+    const handleDelete = (id, salesValue, CallHubvalue) => {
+        const updatedFieldCount = fieldCount.filter((item) => item.id !== id);
+
+        const updatedSalesForceFields = salesForceFields.map((item) => item.name === salesValue ? {...item, status: true} : item)
+        setSalesForceFields(updatedSalesForceFields);
+
+        const updatedCallHubCustomFields = callHubCustomFields.map((item) => item.name === CallHubvalue ? {...item, status: true} : item)
+        setCallHubCustomFields(updatedCallHubCustomFields);
+
+        setFieldCount(updatedFieldCount);
+    }
+
+
     
     return (
         <div id={styles.Main_cont}>
             <FieldHeader />
-            {fieldCount.map((item) => <FieldsRow key={item} id={item} handleDelete={handleDelete} salesForceFields={salesForceFields} callHubCustomFields={callHubCustomFields}/> )}
+            {fieldCount.map((item) => <FieldsRow key={item.id} id={item.id} callHubCustomStatus={item.callHubCustomStatus} salesStatus={item.salesStatus} handleDelete={handleDelete} salesForceFields={salesForceFields} callHubCustomFields={callHubCustomFields} handleToggleSalesStatus={handleToggleSalesStatus} handleToggleCallHubStatus={handleToggleCallHubStatus} handleSalesFieldOptionToggle={handleSalesFieldOptionToggle} handleCallHubFieldOptionToggle={handleCallHubFieldOptionToggle}/> )}
             <div className={styles.button_cont} onClick={handleAddRow}>
                 <div>+</div>
                 <div>map another field</div>
