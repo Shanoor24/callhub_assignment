@@ -4,19 +4,23 @@
 
 
 #Main_cont {
-    width: 500px;
-    border: 1px solid red;
+    width: 550px;
+    /* border: 1px solid red; */
     margin: auto;
     display: flex;
-    margin-bottom: 10px;
+    margin-bottom: 7px;
 }
 
 
 #Main_cont > div {
-    width: 50%;
+    /* width: 50%; */
     text-align: left;
     font-family: 'Quicksand', sans-serif;
     font-size: 15px;
     font-weight: 700;
     color: #535151;
+}
+
+#Main_cont > div:nth-child(1) {
+    width: 281px;
 }

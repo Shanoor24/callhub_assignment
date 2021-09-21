@@ -10,3 +10,31 @@
     margin: auto;
     margin-top: 100px;
 }
+
+.button_cont {
+    display: flex;
+    border: 1.5px dashed #6baae6;
+    width: 163px;
+    margin-left: 25px;
+    border-radius: 0.2em;
+    cursor: pointer;
+}
+
+.button_cont > div:nth-child(1) {
+    background-color: #EFEFEF;
+    width: 25px;
+    font-family: 'Quicksand', sans-serif;
+    font-size: 19px;
+    font-weight: 700;
+    color: #6baae6;
+    padding-top: 2px;
+}
+
+.button_cont > div:nth-child(2) {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 13px;
+    font-weight: 700;
+    color: #727171;
+    padding: 7px 0px 6px 3px;
+    margin-left: 10px;
+}
