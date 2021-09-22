@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styles from "./FieldsRow.module.css"
 
-function FieldsRow({id, callHubCustomStatus, salesStatus, handleDelete, salesForceFields, callHubCustomFields, handleToggleSalesStatus, handleToggleCallHubStatus, handleSalesFieldOptionToggle, handleCallHubFieldOptionToggle}) {
+function FieldsRow({id, callHubCustomStatus, salesStatus, handleDelete, salesForceFields, callHubCustomFields, handleToggleSalesStatus, handleToggleCallHubStatus, handleSalesFieldOptionToggle, handleCallHubFieldOptionToggle, fieldCount, handleKeys, handleValues}) {
     const [salesFieldValue, setSalesFieldValue] = useState("");
     const [callHubFieldValue, setCallHubFieldValue] = useState("");
 
@@ -10,12 +10,14 @@ function FieldsRow({id, callHubCustomStatus, salesStatus, handleDelete, salesFor
         const clickedItem = salesForceFields.filter((item) => item.id === clickedItemId);
         setSalesFieldValue(clickedItem[0].name);
         handleSalesFieldOptionToggle(clickedItemId, id, salesFieldValue);
+        handleKeys(id, clickedItem[0].name);
     }
 
     const handleUpdateCallHubFieldValue = (clickedItemId) => {
         const clickedItem = callHubCustomFields.filter((item) => item.id === clickedItemId);
         setCallHubFieldValue(clickedItem[0].name);
         handleCallHubFieldOptionToggle(clickedItemId, id, callHubFieldValue)
+        handleValues(id, clickedItem[0].name);
     }
 
     const handleDeleteField = (id) => {
@@ -31,7 +33,7 @@ function FieldsRow({id, callHubCustomStatus, salesStatus, handleDelete, salesFor
                     salesStatus ? <div className={styles.options_cont}>
                             <div style={{pointerEvents: "none", opacity: "0.4"}}>Choose</div>
                             {
-                                salesForceFields.map((item) => item.status && <div onClick={() => handleUpdateSalesFieldValue(item.id)}>{item.name}</div> )
+                                salesForceFields.map((item) => item.status && <div key={item.id} onClick={() => handleUpdateSalesFieldValue(item.id)}>{item.name}</div> )
                             }
                     </div> : ""
                 }
@@ -46,14 +48,14 @@ function FieldsRow({id, callHubCustomStatus, salesStatus, handleDelete, salesFor
                     callHubCustomStatus ? <div className={styles.options_cont}>
                             <div style={{pointerEvents: "none", opacity: "0.4"}}>Choose</div>
                             {
-                                callHubCustomFields.map((item) => item.status && <div onClick={() => handleUpdateCallHubFieldValue(item.id)}>{item.name}</div> )
+                                callHubCustomFields.map((item) => item.status && <div key={item.id} onClick={() => handleUpdateCallHubFieldValue(item.id)}>{item.name}</div> )
                             }
                     </div> : ""
                 }
             </div>
-            <div className={styles.delete_icon} onClick={() => handleDeleteField(id)}>
+            {fieldCount.length !== 1 ? <div className={styles.delete_icon} onClick={() => handleDeleteField(id)}>
                 <img src="https://i.imgur.com/7hyNwFF.jpg" alt="delete_icon" style={{height: "20px"}}/>
-            </div>
+            </div> : ""}
         </div>
     )
 }

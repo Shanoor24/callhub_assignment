@@ -1,17 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import FieldHeader from './FieldHeader';
 import styles from "./FieldMapperConfig.module.css"
 import FieldsRow from './FieldsRow';
+import { v4 as uuid } from "uuid"
 
 
 function FieldMapperConfigMain() {
-    const [fieldCount, setFieldCount] = useState([{id: 1, salesStatus: false, callHubCustomStatus: false}]);
+    const [fieldCount, setFieldCount] = useState([{id: uuid(), salesStatus: false, callHubCustomStatus: false}]);
     const [selectedSalesIds, setSelectedSalesIds] = useState([]);
     const [selectedcallHubIds, setSelectedCallHubIds] = useState([]);
+    const [keys, setKeys] = useState([]);
+    const [values, setValues] = useState([]);
 
     const handleAddRow = () => {
         const payload = {
-            id: (fieldCount[fieldCount.length - 1].id + 1),
+            id: uuid(),
             salesStatus: false,
             callHubCustomStatus: false
         }
@@ -31,37 +34,63 @@ function FieldMapperConfigMain() {
     }
 
     const initSalesForceFields = [
-        {id: 1, name: "Contact ID", status: true},
-        {id: 2, name: "Deleted", status: true},
-        {id: 3, name: "Master Record ID", status: true},
-        {id: 4, name: "Account ID", status: true},
-        {id: 5, name: "Salutation", status: true},
-        {id: 6, name: "Other Street", status: true},
-        {id: 7, name: "Other City", status: true},
-        {id: 8, name: "Other State/Province", status: true},
-        {id: 9, name: "Zip/Postal Code", status: true},
-        {id: 10, name: "Other_4", status: true},
-        {id: 11, name: "Other_5", status: true},
-        {id: 12, name: "Other_6", status: true}
+        {id: uuid(), name: "Contact ID", status: true},
+        {id: uuid(), name: "Deleted", status: true},
+        {id: uuid(), name: "Master Record ID", status: true},
+        {id: uuid(), name: "Account ID", status: true},
+        {id: uuid(), name: "Salutation", status: true},
+        {id: uuid(), name: "Other Street", status: true},
+        {id: uuid(), name: "Other City", status: true},
+        {id: uuid(), name: "Other State/Province", status: true},
+        {id: uuid(), name: "Zip/Postal Code", status: true},
+        {id: uuid(), name: "Other_4", status: true},
+        {id: uuid(), name: "Other_5", status: true},
+        {id: uuid(), name: "Other_6", status: true}
     ]
 
     const initCallHubCustomFields = [
-        {id: 1, name: "End_date", status: true},
-        {id: 2, name: "test1", status: true},
-        {id: 3, name: "Frequency_of_Giving", status: true},
-        {id: 4, name: "test", status: true},
-        {id: 5, name: "VANID105147", status: true},
-        {id: 6, name: "Ward", status: true},
-        {id: 7, name: "test_2", status: true},
-        {id: 8, name: "test_3", status: true},
-        {id: 9, name: "test_4", status: true},
-        {id: 10, name: "test_5", status: true},
-        {id: 11, name: "test_6", status: true},
-        {id: 12, name: "test_7", status: true},
+        {id: uuid(), name: "End_date", status: true},
+        {id: uuid(), name: "test1", status: true},
+        {id: uuid(), name: "Frequency_of_Giving", status: true},
+        {id: uuid(), name: "test", status: true},
+        {id: uuid(), name: "VANID105147", status: true},
+        {id: uuid(), name: "Ward", status: true},
+        {id: uuid(), name: "test_2", status: true},
+        {id: uuid(), name: "test_3", status: true},
+        {id: uuid(), name: "test_4", status: true},
+        {id: uuid(), name: "test_5", status: true},
+        {id: uuid(), name: "test_6", status: true},
+        {id: uuid(), name: "test_7", status: true},
     ]
 
     const [salesForceFields, setSalesForceFields] = useState(initSalesForceFields);
     const [callHubCustomFields, setCallHubCustomFields] = useState(initCallHubCustomFields);
+
+    const handleKeys = (mainId, value) => {
+        if (selectedSalesIds.length > 0 && selectedSalesIds.includes(mainId)) {
+            const updatedKeys = keys.map((item) => item.id === mainId ? {...item, name: value} : item);
+            setKeys(updatedKeys);
+        } else {
+            const payload = {
+                id : mainId,
+                name: value
+            }
+            setKeys([...keys, payload]);
+        }
+    }
+
+    const handleValues = (mainId, value) => {
+        if (selectedcallHubIds.length > 0 && selectedcallHubIds.includes(mainId)) {
+            const updatedValues = values.map((item) => item.id === mainId ? {...item, name: value} : item);
+            setValues(updatedValues);
+        } else {
+            const payload = {
+                id : mainId,
+                name: value
+            }
+            setValues([...values, payload]);
+        }
+    }
 
     const handleSalesFieldOptionToggle = (id, mainId, value) => {
         if (selectedSalesIds.length > 0 && selectedSalesIds.includes(mainId)) {
@@ -70,7 +99,7 @@ function FieldMapperConfigMain() {
             setSalesForceFields(updatedSalesForceFields);
         } else {
             const updatedSalesForceFields = salesForceFields.map((item) => item.id === id ? {...item, status: false} : item);
-
+            
             setSalesForceFields(updatedSalesForceFields);
             setSelectedSalesIds([...selectedSalesIds, mainId])
         }
@@ -105,11 +134,16 @@ function FieldMapperConfigMain() {
     }
 
 
+    useEffect(() => {
+        console.log(keys);
+        console.log(values);
+    },[keys, values])
+
     
     return (
         <div id={styles.Main_cont}>
             <FieldHeader />
-            {fieldCount.map((item) => <FieldsRow key={item.id} id={item.id} callHubCustomStatus={item.callHubCustomStatus} salesStatus={item.salesStatus} handleDelete={handleDelete} salesForceFields={salesForceFields} callHubCustomFields={callHubCustomFields} handleToggleSalesStatus={handleToggleSalesStatus} handleToggleCallHubStatus={handleToggleCallHubStatus} handleSalesFieldOptionToggle={handleSalesFieldOptionToggle} handleCallHubFieldOptionToggle={handleCallHubFieldOptionToggle}/> )}
+            {fieldCount.map((item) => <FieldsRow key={item.id} id={item.id} callHubCustomStatus={item.callHubCustomStatus} salesStatus={item.salesStatus} handleDelete={handleDelete} salesForceFields={salesForceFields} callHubCustomFields={callHubCustomFields} handleToggleSalesStatus={handleToggleSalesStatus} handleToggleCallHubStatus={handleToggleCallHubStatus} handleSalesFieldOptionToggle={handleSalesFieldOptionToggle} handleCallHubFieldOptionToggle={handleCallHubFieldOptionToggle} fieldCount={fieldCount} handleKeys={handleKeys} handleValues={handleValues}/> )}
             <div className={styles.button_cont} onClick={handleAddRow}>
                 <div>+</div>
                 <div>map another field</div>
