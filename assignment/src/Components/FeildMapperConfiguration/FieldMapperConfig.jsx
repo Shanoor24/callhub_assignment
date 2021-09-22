@@ -3,6 +3,8 @@ import FieldHeader from './FieldHeader';
 import styles from "./FieldMapperConfig.module.css"
 import FieldsRow from './FieldsRow';
 import { v4 as uuid } from "uuid"
+import { useDispatch } from 'react-redux';
+import { postData } from '../../Redux/FieldsData/actions';
 
 
 function FieldMapperConfigMain() {
@@ -11,7 +13,10 @@ function FieldMapperConfigMain() {
     const [selectedcallHubIds, setSelectedCallHubIds] = useState([]);
     const [keys, setKeys] = useState([]);
     const [values, setValues] = useState([]);
-    let finalData = {};
+    const dispatch = useDispatch();
+    let finalData = {id: uuid()};
+
+    
 
     const handleAddRow = () => {
         const payload = {
@@ -147,7 +152,22 @@ function FieldMapperConfigMain() {
                 finalData[keys[i].name] = values[i].name; 
             }
         }
-        console.log(finalData);
+        // console.log(finalData);
+    }
+    
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+        dispatch(postData(finalData));
+        setFieldCount([{id: uuid(), salesStatus: false, callHubCustomStatus: false}]);
+        setSelectedSalesIds([]);
+        setSelectedCallHubIds([]);
+        setKeys([]);
+        setValues([]);
+        setSalesForceFields(initSalesForceFields);
+        setCallHubCustomFields(initCallHubCustomFields)
+        finalData = {id: uuid()};
+        alert("Response submitted successfully!")
     }
     
 
@@ -169,6 +189,7 @@ function FieldMapperConfigMain() {
                 <div>+</div>
                 <div>map another field</div>
             </div>
+            <button className={styles.submit_button} onClick={handleSubmit}>Submit</button>
         </div> 
     )
 }
