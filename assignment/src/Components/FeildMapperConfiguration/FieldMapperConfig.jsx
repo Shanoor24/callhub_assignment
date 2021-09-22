@@ -11,6 +11,7 @@ function FieldMapperConfigMain() {
     const [selectedcallHubIds, setSelectedCallHubIds] = useState([]);
     const [keys, setKeys] = useState([]);
     const [values, setValues] = useState([]);
+    let finalData = {};
 
     const handleAddRow = () => {
         const payload = {
@@ -130,13 +131,33 @@ function FieldMapperConfigMain() {
         const updatedCallHubCustomFields = callHubCustomFields.map((item) => item.name === CallHubvalue ? {...item, status: true} : item)
         setCallHubCustomFields(updatedCallHubCustomFields);
 
+        const updatedKeys = keys.filter((item) => item.id !== id);
+        setKeys(updatedKeys);
+
+        const updatedValues = values.filter((item) => item.id !== id);
+        setValues(updatedValues);
+
+
         setFieldCount(updatedFieldCount);
     }
 
+    const handleData = () => {
+        for(let i = 0; i < keys.length; i++) {
+            if (keys[i]?.id === values[i]?.id) {
+                finalData[keys[i].name] = values[i].name; 
+            }
+        }
+        console.log(finalData);
+    }
+    
+
 
     useEffect(() => {
-        console.log(keys);
-        console.log(values);
+        // console.log(keys);
+        // console.log(values);
+
+        handleData();
+        
     },[keys, values])
 
     
