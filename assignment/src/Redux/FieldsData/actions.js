@@ -12,27 +12,27 @@ const handleAddRow = () => {
         type: HANDLE_ADD_ROW,
         payload
     }   
-}
+} // For adding new row
 
 const handleToggleSalesStatus = (rowId) => {
     return {
         type: HANDLE_TOGGLE_SALES_FIELD_STATUS,
         rowId
     }
-}
+} // This will toggle the option box of salesforcefield
 
 const handleResetFieldCount = () => {
     return {
         type : RESET_FINAL_DATA
     }
-}
+} 
 
 const handleToggleCallHubStatus = (rowId) => {
     return {
         type: HANDLE_TOGGLE_CALLHUB_FIELD_STATUS,
         rowId
     }
-}
+} // This will toggle the option box of CallhubCustomfield
 
 const handleToggleFieldsStatus = (fieldId, rowId, value) => {
     return {
@@ -41,7 +41,7 @@ const handleToggleFieldsStatus = (fieldId, rowId, value) => {
         rowId,
         value
     }
-}
+} // This will toggle the option's status in both fields
 
 const handleKeys = (rowId, value) => {
     return {
@@ -49,7 +49,7 @@ const handleKeys = (rowId, value) => {
         rowId,
         value,
     }
-}
+} // This will help to store selected keys
 
 const handleValues = (rowId, value) => {
     return {
@@ -57,7 +57,7 @@ const handleValues = (rowId, value) => {
         rowId,
         value
     }
-}
+} // This will help to store selected values
 
 const handleDelete = (rowId, salesFieldName, callHubFieldName) => {
     return {
@@ -66,19 +66,19 @@ const handleDelete = (rowId, salesFieldName, callHubFieldName) => {
         salesFieldName,
         callHubFieldName
     }
-}
+} // This will delete the entire row
 
 const handleUpdateFinalData = () => {
     return {
         type: HANDLE_UPDATE_FINAL_DATA
     }
-}
+} // This will make the match of keys and values
 
 const handleSubmit = () => {
     return {
         type: HANDLE_SUBMIT
     }
-}
+} // This will store the final data and reset all the states.
 
 export {handleAddRow, handleToggleSalesStatus, handleToggleCallHubStatus, handleToggleFieldsStatus, handleKeys, handleValues, handleDelete, handleUpdateFinalData, handleSubmit, handleResetFieldCount}
 
