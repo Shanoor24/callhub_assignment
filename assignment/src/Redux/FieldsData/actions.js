@@ -1,89 +1,86 @@
-import Axios from "axios";
-import { GET_DATA_FAILURE, GET_DATA_REQUEST, GET_DATA_SUCCESS } from "./actionTypes";
+import { HANDLE_ADD_ROW, HANDLE_TOGGLE_SALES_FIELD_STATUS, HANDLE_TOGGLE_CALLHUB_FIELD_STATUS, HANDLE_TOGGLE_FIELDS_STATUS, HANDLE_KEYS, HANDLE_VALUES, HANDLE_DELETE, HANDLE_UPDATE_FINAL_DATA, HANDLE_SUBMIT, RESET_FINAL_DATA } from "./actionTypes"
+import { v4 as uuid } from "uuid";
 
 
-const axios = Axios.create({
-    baseURL: "https://json-server-mocker-shanoor.herokuapp.com/"
-})
-
-const getDataRequest = () => {
-    return {
-        type: GET_DATA_REQUEST
+const handleAddRow = () => {
+    const payload = {
+        id: uuid(),
+        salesStatus: false,
+        callHubCustomStatus: false
     }
-}
-
-const getDataSuccess = (payload) => {
     return {
-        type: GET_DATA_SUCCESS,
+        type: HANDLE_ADD_ROW,
         payload
-    }
+    }   
 }
 
-const getDataFailure = (error) => {
+const handleToggleSalesStatus = (rowId) => {
     return {
-        type: GET_DATA_FAILURE,
-        error
+        type: HANDLE_TOGGLE_SALES_FIELD_STATUS,
+        rowId
     }
 }
 
-// const postDataRequest = () => {
-//     return {
-//         type: POST_DATA_REQUEST
-//     }
-// }
-
-// const postDataSuccess = (payload) => {
-//     return {
-//         type: POST_DATA_SUCCESS,
-//         payload
-//     }
-// }
-
-// const postDataFailure = (error) => {
-//     return {
-//         type: POST_DATA_FAILURE,
-//         error
-//     }
-// }
-
-
-const getData = (payload) => (dispatch) => {
-    dispatch(getDataRequest());
-
-    const config = {
-        url: "/callhub_data",
-        method: "get"
+const handleResetFieldCount = () => {
+    return {
+        type : RESET_FINAL_DATA
     }
-
-    return axios(config)
-    .then((res) => {
-        dispatch(getDataSuccess(res.data));
-        console.log(res.data);
-    })
-    .catch((err) => {
-        dispatch(getDataFailure(err));
-        console.log(err)
-    })
 }
 
-const postData = (payload) => (dispatch) => {
-    dispatch(getDataRequest());
-
-    const config = {
-        url: "/callhub_data",
-        method: "post",
-        data: payload
+const handleToggleCallHubStatus = (rowId) => {
+    return {
+        type: HANDLE_TOGGLE_CALLHUB_FIELD_STATUS,
+        rowId
     }
-
-    return axios(config)
-    .then((res) => {
-        // dispatch(postDataSuccess);
-        dispatch(getData());
-    })
-    .catch((err) => {
-        dispatch(getDataFailure(err))
-        console.log(err)
-    })
 }
 
-export {getData, postData}
+const handleToggleFieldsStatus = (fieldId, rowId, value) => {
+    return {
+        type: HANDLE_TOGGLE_FIELDS_STATUS,
+        fieldId,
+        rowId,
+        value
+    }
+}
+
+const handleKeys = (rowId, value) => {
+    return {
+        type: HANDLE_KEYS,
+        rowId,
+        value,
+    }
+}
+
+const handleValues = (rowId, value) => {
+    return {
+        type: HANDLE_VALUES,
+        rowId,
+        value
+    }
+}
+
+const handleDelete = (rowId, salesFieldName, callHubFieldName) => {
+    return {
+        type: HANDLE_DELETE,
+        rowId,
+        salesFieldName,
+        callHubFieldName
+    }
+}
+
+const handleUpdateFinalData = () => {
+    return {
+        type: HANDLE_UPDATE_FINAL_DATA
+    }
+}
+
+const handleSubmit = () => {
+    return {
+        type: HANDLE_SUBMIT
+    }
+}
+
+export {handleAddRow, handleToggleSalesStatus, handleToggleCallHubStatus, handleToggleFieldsStatus, handleKeys, handleValues, handleDelete, handleUpdateFinalData, handleSubmit, handleResetFieldCount}
+
+
+

@@ -1,26 +1,26 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getData } from "../../Redux/FieldsData/actions";
+import React from "react";
+import { useSelector } from "react-redux";
 import styles from "./PrintData.module.css"
 
 
 
 function PrintData() {
-    const {data} = useSelector((state) => state.fieldData)
-    const dispatch = useDispatch();
-    let latest_data = data[data.length - 1]
+    const {lastSubmittedResponse} = useSelector((state) => state.fieldData)
     let fields = [];
+    // let keys_length = Object.keys(lastSubmittedResponse).length;
+    // if (keys_length > 1) {
+    //     console.log(lastSubmittedResponse);
+    //     console.log(keys_length);
+    //     console.log(fields)
+    // }
 
-    for (let key in latest_data) {
-        if (key !== "id") {
-            fields.push([key, latest_data[key]])
-            console.log(fields)
+        for (let key in lastSubmittedResponse) {
+            if (key !== "id") {
+                fields.push([key, lastSubmittedResponse[key]])
+            }
         }
-    }
 
-    useEffect(() => {
-        dispatch(getData());
-    }, [data])
+
     return (
         <div id={styles.Main_cont}>
             <h3 className={styles.heading}>Last Submitted Response</h3>
@@ -29,7 +29,10 @@ function PrintData() {
                 <div>CALLHUB CUSTOM FIELDS</div>
             </div>
             {
-                fields?.map((item) => <div className={styles.field_cont}>
+               fields.length === 0 ? <div className={styles.field_cont}>
+                        <div>Empty</div>
+                        <div>Empty</div>
+                </div> : fields?.map((item) => <div className={styles.field_cont}>
                     <div>{item[0]}</div>
                     <div>{item[1]}</div>
                 </div> )

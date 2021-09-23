@@ -1,0 +1,63 @@
+@import url('https://fonts.googleapis.com/css2?family=Quicksand:wght@300;400;500;600;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Yantramanav:wght@100;300;400;500;700;900&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Arimo:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&family=Yantramanav:wght@100;300;400;500;700;900&display=swap');
+
+
+#main_cont {
+    height: 268px;
+    width: 381px;
+    padding: 20px;
+    /* box-sizing: border-box; */
+    background-color: #FFFFFF;
+    margin: auto;
+    display: flex;
+    gap: 33px;
+}
+
+.heading {
+    font-family: sans-serif;
+    font-size: 20px;
+    font-weight: 500;
+    color: #444444;
+    line-height: 28px;
+    /* margin-bottom: 20px; */
+    margin-bottom: 10px;
+}
+
+.content {
+    font-family: sans-serif;
+    font-size: 14px;
+    color: #818181;
+    line-height: 20px;
+    margin-bottom: 16px;
+}
+
+
+.button1 {
+    height: 30px;
+    width: 197px;
+    font-size: 14;
+    border-radius: 4px;
+    background-image: linear-gradient(to bottom, #3da0ea, #3983de);
+    background-position: center center !important;
+    background-color:  #3da0ea;
+ 	/* font-weight: 300; */
+    color: #ffffff;
+ 	box-shadow: 0px 0px 8px rgba(33,33,33,0.25);
+ 	text-decoration: none solid rgb(255, 255, 255);
+    text-align: center;
+  	border: none;
+    margin-bottom: 10px;
+    /* padding: 5px 0px 5px 0px; */
+}
+
+.button2 {
+    height: 30px;
+    width: 197px;
+    font-size: 14;
+    border-radius: 4px;
+    font-weight: 300;
+    box-shadow: 0px 0px 8px rgba(33,33,33,0.25);
+    text-align: center;
+    border: none;
+}
